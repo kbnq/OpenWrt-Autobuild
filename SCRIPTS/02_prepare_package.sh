@@ -56,6 +56,45 @@ ln -sf ../../../feeds/luci/applications/luci-app-autoreboot ./package/feeds/luci
 svn export https://github.com/immortalwrt/luci/branches/openwrt-21.02/applications/luci-app-ramfree feeds/luci/applications/luci-app-ramfree
 ln -sf ../../../feeds/luci/applications/luci-app-ramfree ./package/feeds/luci/luci-app-ramfree
 
+# Golang toolchain
+rm -rf feeds/packages/lang/golang
+svn co https://github.com/openwrt/packages/trunk/lang/golang feeds/packages/lang/golang
+
+# ShadowsocksR Plus+
+svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus ./package/new/luci-app-ssr-plus
+rm -rf ./feeds/packages/net/shadowsocks-libev
+rm -rf ./feeds/packages/net/xray-core
+rm -rf ./feeds/packages/net/kcptun
+
+svn co https://github.com/coolsnowwolf/packages/trunk/net/shadowsocks-libev ./package/new/shadowsocks-libev
+svn co https://github.com/immortalwrt/packages/trunk/net/kcptun ./feeds/packages/net/kcptun
+ln -sf ../../../feeds/packages/net/kcptun ./package/feeds/packages/kcptun
+
+svn co https://github.com/fw876/helloworld/trunk/chinadns-ng ./package/new/chinadns-ng
+svn co https://github.com/fw876/helloworld/trunk/dns2socks ./package/new/dns2socks
+svn co https://github.com/fw876/helloworld/trunk/dns2tcp ./package/new/dns2tcp
+svn co https://github.com/fw876/helloworld/trunk/gn ./package/new/gn
+svn co https://github.com/fw876/helloworld/trunk/hysteria ./package/new/hysteria
+svn co https://github.com/fw876/helloworld/trunk/ipt2socks ./package/new/ipt2socks
+svn co https://github.com/fw876/helloworld/trunk/lua-neturl ./package/new/lua-neturl
+svn co https://github.com/fw876/helloworld/trunk/microsocks ./package/new/microsocks
+svn co https://github.com/fw876/helloworld/trunk/naiveproxy ./package/new/naiveproxy
+svn co https://github.com/fw876/helloworld/trunk/redsocks2 ./package/new/redsocks2
+svn co https://github.com/fw876/helloworld/trunk/shadowsocks-rust ./package/new/shadowsocks-rust
+svn co https://github.com/fw876/helloworld/trunk/shadowsocksr-libev ./package/new/shadowsocksr-libev
+svn co https://github.com/fw876/helloworld/trunk/simple-obfs ./package/new/simple-obfs
+svn co https://github.com/fw876/helloworld/trunk/tcping ./package/new/tcping
+svn co https://github.com/fw876/helloworld/trunk/trojan ./package/new/trojan
+svn co https://github.com/fw876/helloworld/trunk/v2ray-core ./package/new/v2ray-core
+svn co https://github.com/fw876/helloworld/trunk/v2ray-plugin ./package/new/v2ray-plugin
+svn co https://github.com/fw876/helloworld/trunk/xray-core ./package/new/xray-core
+
+pushd package/new
+    wget -qO - https://github.com/fw876/helloworld/commit/5bbf6e7.patch | patch -p1
+popd
+rm -rf ./package/new/luci-app-ssr-plus/po/zh_Hans
+sed -i '/Clang.CN.CIDR/a\o:value("https://gh.404delivr.workers.dev/https://github.com/QiuSimons/Chnroute/raw/master/dist/chnroute/chnroute.txt", translate("QiuSimons/Chnroute"))' ./package/new/luci-app-ssr-plus/luasrc/model/cbi/shadowsocksr/advanced.lua
+
 ## Ending
 # Lets Fuck
 mkdir package/base-files/files/usr/bin
