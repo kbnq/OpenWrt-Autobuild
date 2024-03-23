@@ -115,6 +115,44 @@ cp -rf ../PATCH/script/updategeo.sh ./package/base-files/files/bin/updategeo
 # Golang
 rm -rf ./feeds/packages/lang/golang
 cp -rf ../openwrt_pkg_ma/lang/golang ./feeds/packages/lang/golang
+# ChinaDNS
+git clone -b luci --depth 1 https://github.com/QiuSimons/openwrt-chinadns-ng.git package/new/luci-app-chinadns-ng
+cp -rf ../passwall_pkg/chinadns-ng ./package/new/chinadns-ng
+# ShadowsocksR Plus+ 依赖
+rm -rf ./feeds/packages/net/shadowsocks-libev
+cp -rf ../lede_pkg/net/shadowsocks-libev ./package/new/shadowsocks-libev
+cp -rf ../sbwfw876/shadow-tls ./package/new/shadow-tls
+cp -rf ../sbwfw876/v2dat ./package/new/v2dat
+cp -rf ../sbwfw876/tuic-client ./package/new/tuic-client
+cp -rf ../sbwfw876/redsocks2 ./package/new/redsocks2
+cp -rf ../sbwfw876/trojan ./package/new/trojan
+cp -rf ../sbwfw876/tcping ./package/new/tcping
+cp -rf ../sbwfw876/dns2tcp ./package/new/dns2tcp
+cp -rf ../sbwfw876/gn ./package/new/gn
+cp -rf ../sbwfw876/shadowsocksr-libev ./package/new/shadowsocksr-libev
+cp -rf ../sbwfw876/simple-obfs ./package/new/simple-obfs
+cp -rf ../sbwfw876/naiveproxy ./package/new/naiveproxy
+cp -rf ../sbwfw876/v2ray-core ./package/new/v2ray-core
+cp -rf ../passwall_pkg/hysteria ./package/new/hysteria
+cp -rf ../sbwfw876/sagernet-core ./package/new/sagernet-core
+rm -rf ./feeds/packages/net/xray-core
+cp -rf ../immortalwrt_pkg/net/xray-core ./feeds/packages/net/xray-core
+sed -i '/CURDIR/d' feeds/packages/net/xray-core/Makefile
+cp -rf ../sbwfw876/v2ray-plugin ./package/new/v2ray-plugin
+cp -rf ../sbwfw876/shadowsocks-rust ./package/new/shadowsocks-rust
+cp -rf ../sbwfw876/lua-neturl ./package/new/lua-neturl
+rm -rf ./feeds/packages/net/kcptun
+cp -rf ../immortalwrt_pkg/net/kcptun ./feeds/packages/net/kcptun
+ln -sf ../../../feeds/packages/net/kcptun ./package/feeds/packages/kcptun
+# ShadowsocksR Plus+
+cp -rf ../sbwfw876/luci-app-ssr-plus ./package/new/luci-app-ssr-plus
+rm -rf ./package/new/luci-app-ssr-plus/po/zh_Hans
+pushd package/new
+wget -qO - https://github.com/fw876/helloworld/commit/5bbf6e7.patch | patch -p1
+popd
+pushd package/new/luci-app-ssr-plus
+sed -i '/Clang.CN.CIDR/a\o:value("https://fastly.jsdelivr.net/gh/QiuSimons/Chnroute@master/dist/chnroute/chnroute.txt", translate("QiuSimons/Chnroute"))' luasrc/model/cbi/shadowsocksr/advanced.lua
+popd
 # NIC drivers update
 git clone https://github.com/sbwml/package_kernel_r8125 package/new/r8125
 cp -rf ../immortalwrt/package/kernel/r8152 ./package/new/r8152
