@@ -21,5 +21,7 @@ git clone -b master --depth 1 https://github.com/coolsnowwolf/luci.git lede_luci
 git clone -b main --depth 1 https://github.com/openwrt/openwrt.git openwrt_ma
 git clone -b master --depth 1 https://github.com/openwrt/packages.git openwrt_pkg_ma
 git clone -b master --depth 1 https://github.com/openwrt/luci.git openwrt_luci_ma
+git clone -b v5 --depth 1 https://github.com/sbwml/openwrt_helloworld.git sbwfw876
+git clone -b main --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages.git passwall_pkg
 
 exit 0
