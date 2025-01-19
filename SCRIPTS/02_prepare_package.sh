@@ -37,6 +37,12 @@ cp -f ../PATCH/firewall/libnftnl/001-libnftnl-add-fullcone-expression-support.pa
 sed -i '/PKG_INSTALL:=/iPKG_FIXUP:=autoreconf' package/libs/libnftnl/Makefile
 mkdir -p package/network/utils/nftables/patches
 cp -f ../PATCH/firewall/nftables/002-nftables-add-fullcone-expression-support.patch ./package/network/utils/nftables/patches/002-nftables-add-fullcone-expression-support.patch
+
+cp -rf ../OpenWrt-Add ./package/new
+rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box,frp,microsocks,shadowsocks-libev,zerotier,daed}
+rm -rf feeds/luci/applications/{luci-app-frps,luci-app-frpc,luci-app-zerotier,luci-app-filemanager}
+rm -rf feeds/packages/utils/coremark
+
 # Patch LuCI to add fullcone button
 pushd feeds/luci
 patch -p1 <../../../PATCH/firewall/luci-app-firewall_add_fullcone_fw4.patch
